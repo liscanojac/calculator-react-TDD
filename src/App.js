@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import './App.css';
 import Button from './Components/Button';
 import { btnContent } from './__test__/btnContent';
@@ -11,8 +11,10 @@ function App() {
   const operations = {
 
     "+": () => {
-      setDisplayValue(Number(memory[0]) + Number(memory[2]));
-      setMemory([Number(memory[0]) + Number(memory[2])]);
+      let result = Number(memory[0]) + Number(memory[2]);
+      result = result.toString();
+      setDisplayValue(result);
+      setMemory([result]);
     }
   }
 
@@ -20,13 +22,16 @@ function App() {
     if (displayValue === "0") {
       setDisplayValue(content);
       setMemory([content]);
-
+      console.log(1, memory);
     } else if (memory.length % 2 === 0) {
       setDisplayValue(displayValue + content);
       setMemory([...memory, content])
+      console.log(2, memory);
     } else {
       setDisplayValue(displayValue + content);
       setMemory([memory + content]);
+      // console.log(memory)
+      // console.log(3);
     }
   }
 
@@ -35,20 +40,28 @@ function App() {
     if (memory.length === 1) {
       setDisplayValue(displayValue + content);
       setMemory([...memory, content])
+      console.log(3, memory);
     } else {
       handleEqual();
+      // getDisplayValue();
+      // getMemory();
+      console.log(4, memory);
+      // handleClickOperators(content);
       // setDisplayValue(displayValue + content);
-      // setMemory([...memory, content])
+      setMemory([...memory, content])
     }
   }
 
   const handleEqual = () => {
     
     if (memory.length === 3) {
-
+      console.log(`handleEqual being exec`, memory);
       operations[memory[1]]();
     }
   }
+
+  useEffect(() => {
+  }, [displayValue, memory]);
   return (
     <div className="App">
       <div 
