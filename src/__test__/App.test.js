@@ -68,3 +68,27 @@ test('Typing numbers work correctly', () => {
   expect(display.textContent).toBe("56");
 });
 
+test('Decimal dot only can be typed once', () => {
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const decimalBtn = getByTestId('.-button');
+  const btnTwo = getByTestId('2-button');
+
+  fireEvent.click(decimalBtn);
+  fireEvent.click(decimalBtn);
+  fireEvent.click(btnTwo);
+
+  expect(display.textContent).toBe("0.2");
+})
+
+test('Zeroes are not added to the front', () => {
+
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const zeroBtn = getByTestId('0-button');
+
+  fireEvent.click(zeroBtn);
+  fireEvent.click(zeroBtn);
+
+  expect(display.textContent).toBe("0");
+});

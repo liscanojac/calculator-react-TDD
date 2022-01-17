@@ -12,10 +12,18 @@
 }
 
 .display {
-  font-size: 130px;
+  font-size: 92px;
   margin-bottom: 10px;
-  font-weight: 200;
+  font-weight: 300;
   text-align: right;
+}
+
+.memory {
+  font-size: 80px;
+  margin-bottom: 0;
+  font-weight: 100;
+  word-wrap: break-word;
+  word-break: break-all;
 }
 
 .buttons {

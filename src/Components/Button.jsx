@@ -1,9 +1,15 @@
 import React from 'react'
 import "./Button.css"
 
-function Button({ content, type, handleClick }) {
+function Button({ content, type, dispatch, action }) {
+
+  // console.log(content)
   return (
-    <div onClick={() => handleClick(content)} className={`button ${type || ""}`} data-testid={`${content}-button`}>
+    <div 
+      onClick={() => dispatch({ type: action, payload: content })} 
+      className={`button ${type || ""}`} 
+      data-testid={`${content}-button`}
+    >
       {content}
     </div>
   )
