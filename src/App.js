@@ -35,7 +35,7 @@ function App() {
           }
           if (i < 3) {
             // gray buttons
-            let actions = [ACTIONS.CLEAR, ACTIONS.CHANGE_SIGN] 
+            let actions = [ACTIONS.CLEAR, ACTIONS.CHANGE_SIGN, ACTIONS.PERCENTAGE] 
             return (
               <Button dispatch={dispatch} action={actions[i]} key={i} content={btn} type="function" />
             )

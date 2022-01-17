@@ -4,5 +4,6 @@ export const ACTIONS = {
   CLEAR: "clear",
   DELETE_DIGIT: "delete-digit",
   EQUAL: "equal",
-  CHANGE_SIGN: "change-sign"
+  CHANGE_SIGN: "change-sign",
+  PERCENTAGE: "percentage"
 }

@@ -154,6 +154,27 @@ export default function reducer(state, { type, payload }) {
         }
       }
       return state;
+
+    case ACTIONS.PERCENTAGE:
+      
+      if (state.secondOperand !== null && state.operation !== null) {
+        state = {
+          ...state,
+          secondOperand: state.firstOperand * (state.secondOperand / 100)
+        }
+        return {
+          ...state,
+          result: evaluate(state)
+        }
+      }
+      if(state.firstOperand !== null) {
+        return {
+          ...state,
+          firstOperand: state.firstOperand / 100,
+          result: state.result / 100
+        }
+      }
+      return state;
     case ACTIONS.CLEAR:
       return {
         result: "0",
