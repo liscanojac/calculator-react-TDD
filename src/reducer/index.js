@@ -6,51 +6,159 @@ export default function reducer(state, { type, payload }) {
   switch(type) {
 
     case ACTIONS.TYPE_DIGIT:
-      
-      if (state.currentOperand === "0" && payload !== ".") {
+
+      if (state.result === "∞") {
         return {
           ...state,
-          currentOperand: payload
+          firstOperand: payload,
+          result: payload,
+          operation: null,
+          secondOperand: null
+        };
+      }
+      if (state.operation !== null) {
+
+        if((state.secondOperand === null || state.secondOperand === "0") && payload === ".") {
+          state = {
+            ...state,
+            secondOperand: `0${payload}`
+          }
+        }else if (state.secondOperand === null || state.secondOperand === "0") {
+            state = {
+            ...state,
+            secondOperand: payload,
+          }
+        } else if (payload !== "." && state.secondOperand.length < 7) {
+
+          state = {
+            ...state,
+            secondOperand: `${state.secondOperand}${payload}`
+          }
+        }
+        
+        return {
+          ...state,
+          result: evaluate(state)
         }
       }
-      if (state.currentOperand === "0" && payload === "0") {
+      
+      if (state.result === "0" && payload === ".") {
+        return {
+          ...state,
+          firstOperand: `0${payload}`,
+          result: `${state.result}${payload}`
+        }
+      }
+      if (state.result === "0" && payload === "0") {
         return state;
       }
-      if (state.currentOperand.length === 7) {
+      if (state.firstOperand === null && payload !== "0") {
+        return {
+          ...state,
+          firstOperand: payload,
+          result: payload
+        }
+      }
+      if (state.firstOperand.length === 7) {
         return state;
       }
-      if (state.currentOperand.includes('.') && payload === ".") {
+      if (state.firstOperand.includes('.') && payload === ".") {
         return state;
       }
       return {
         ...state,
-        currentOperand: `${state.currentOperand}${payload}`
+        firstOperand: `${state.firstOperand}${payload}`,
+        result: `${state.result}${payload}`
       }
 
     case ACTIONS.CHOOSE_OPERATION:
 
-      if (state.currentOperand === "0" && state.previousOperand === null) {
-        return state;
-      }
-      if (state.previousOperand === null) {
+      if (state.result === "∞") {
         return {
           ...state,
+          firstOperand: "0",
+          secondOperand: "",
           operation: payload,
-          previousOperand: state.currentOperand,
-          currentOperand: "0"
         }
       }
+      if (payload === "−") {
+        payload = "-";
+      }
+      
+      if (state.firstOperand === null && payload === '-') {
+        return {
+          ...state,
+          firstOperand: "0",
+          operation: payload
+        };
+      }
+      if (state.result === "0" && state.firstOperand === null) {
+        return state;
+      }
+      if (state.operation === null) {
+        return {
+          ...state,
+          operation: payload
+        }
+      }
+      state = {
+        ...state,
+        firstOperand: evaluate(state),
+        secondOperand: null,
+        operation: null,
+        result: evaluate(state)
+      }      
       return {
         ...state,
-        previousOperand: evaluate(state),
-        operation: payload,
-        currentOperand: "0"
-      };
+        operation: payload
+      }
 
+    case ACTIONS.EQUAL:
+      if (state.firstOperand !== null && state.operation !== null && state.secondOperand !== null) {
+        return {
+          ...state,
+          firstOperand: evaluate(state),
+          secondOperand: null,
+          operation: null,
+          result: evaluate(state)
+        }
+      }
+      return state;
+    
+    case ACTIONS.CHANGE_SIGN:
+
+      if (state.secondOperand === null && state.firstOperand !== "0" && state.firstOperand !== null) {
+        return {
+          ...state,
+          firstOperand: `-${state.firstOperand}`,
+          result: `-${state.result}`
+        }
+      }
+      if (state.secondOperand !== null && state.secondOperand !== 0) {
+
+        if (state.operation === "+") {
+          state = {
+            ...state,
+            operation: "-"
+          };
+        } else {
+          state = {
+            ...state,
+            secondOperand: `-${state.secondOperand}`
+          };
+        }
+
+        return {
+          ...state,
+          result: evaluate(state)
+        }
+      }
+      return state;
     case ACTIONS.CLEAR:
       return {
-        currentOperand: "0",
-        previousOperand: null,
+        result: "0",
+        firstOperand: null,
+        secondOperand: null,
         operation: null
       }
     default:

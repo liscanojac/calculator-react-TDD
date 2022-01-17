@@ -3,5 +3,6 @@ export const ACTIONS = {
   CHOOSE_OPERATION: "choose-operation",
   CLEAR: "clear",
   DELETE_DIGIT: "delete-digit",
-  EQUAL: "equal"
+  EQUAL: "equal",
+  CHANGE_SIGN: "change-sign"
 }

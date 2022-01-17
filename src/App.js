@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useReducer } from 'react';
+import React, { useReducer } from 'react';
 import './App.css';
 import Button from './Components/Button';
 import reducer from './reducer';
@@ -8,10 +8,11 @@ import { ACTIONS } from './actions';
 function App() {
   // here is where we set the intial state, inside the useReducer
   const [state, dispatch] = useReducer(reducer, {
-    currentOperand: "0",
-    // you have to include other pieces of your inicial state here even if they are null at the beggining
-    previousOperand: null,
-    operation: null
+    firstOperand: null,
+    // you have to include other pieces of your initial state here even if they are null at the beggining
+    secondOperand: null,
+    operation: null,
+    result: "0"
   });
 
   
@@ -19,10 +20,10 @@ function App() {
     <div className="App">
       <div 
         className="display memory" 
-        data-testid="memory-display">{state.previousOperand}{state.operation}</div>
+        data-testid="memory-display">{state.firstOperand}{state.operation}{state.secondOperand}</div>
       <div 
         className="display" 
-        data-testid="display">{state.currentOperand}</div>
+        data-testid="display">{state.result}</div>
       <div className='buttons'>
         {btnContent.map((btn, i) => {
 
@@ -34,7 +35,7 @@ function App() {
           }
           if (i < 3) {
             // gray buttons
-            let actions = [ACTIONS.CLEAR] 
+            let actions = [ACTIONS.CLEAR, ACTIONS.CHANGE_SIGN] 
             return (
               <Button dispatch={dispatch} action={actions[i]} key={i} content={btn} type="function" />
             )
@@ -43,7 +44,7 @@ function App() {
           if (i === btnContent.length - 1) {
             // equal button
             return (
-              <Button dispatch={dispatch}  key={i} content={btn} type="function" />
+              <Button dispatch={dispatch} action={ACTIONS.EQUAL} key={i} content={btn} type="function" />
             )
           }
 
