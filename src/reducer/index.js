@@ -142,6 +142,14 @@ export default function reducer(state, { type, payload }) {
     case ACTIONS.CHANGE_SIGN:
 
       if (state.secondOperand === null && state.firstOperand !== "0" && state.firstOperand !== null) {
+
+        if (state.firstOperand.includes('-')) {
+          return {
+            ...state,
+            firstOperand: (state.firstOperand * -1).toString(),
+            result: (state.firstOperand * -1).toString()
+          }
+        }
         return {
           ...state,
           firstOperand: `-${state.firstOperand}`,
@@ -161,10 +169,19 @@ export default function reducer(state, { type, payload }) {
             operation: "+"
           }
         } else {
-          state = {
-            ...state,
-            secondOperand: `-${state.secondOperand}`
-          };
+
+          if (state.secondOperand.includes('-')) {
+            state = {
+              ...state,
+              secondOperand: (state.secondOperand * -1).toString()
+            }
+          } else {
+            state = {
+              ...state,
+              secondOperand: `-${state.secondOperand}`
+            };
+          }
+          
         }
 
         return {

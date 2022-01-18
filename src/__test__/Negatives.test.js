@@ -29,6 +29,20 @@ test('± button changes a positive firstOperand to a negative one', () => {
   expect(display.textContent).toBe("-5");
 });
 
+test('± button changes a positive firstOperand to a positive one again if pressed twice', () => {
+
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const btnFive = getByTestId('5-button');
+  const negativeBtn = getByTestId('±-button');
+
+  fireEvent.click(btnFive);
+  fireEvent.click(negativeBtn);
+  fireEvent.click(negativeBtn);
+
+  expect(display.textContent).toBe("5");
+});
+
 test('± button changes a positive secondOperand to a negative one', () => {
 
   const { getByTestId } = render(<App />);
@@ -44,6 +58,24 @@ test('± button changes a positive secondOperand to a negative one', () => {
   fireEvent.click(negativeBtn);
 
   expect(display.textContent).toBe("-5");
+});
+
+test('± button changes a positive secondOperand back to a positive one if pressed twice', () => {
+
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const btnFive = getByTestId('5-button');
+  const btnOne = getByTestId('1-button');
+  const negativeBtn = getByTestId('±-button');
+  const timesBtn = getByTestId('×-button');
+
+  fireEvent.click(btnFive);
+  fireEvent.click(timesBtn);
+  fireEvent.click(btnOne);
+  fireEvent.click(negativeBtn);
+  fireEvent.click(negativeBtn);
+
+  expect(display.textContent).toBe("5");
 });
 
 test('± button changes a sum for a subtraction', () => {
