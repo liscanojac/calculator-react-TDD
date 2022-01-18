@@ -3,9 +3,9 @@
   border-radius: 50%;
   cursor: pointer;
   display: flex;
-  font-size: 35px;
-  height: 72px;
-  width: 72px;
+  font-size: 32px;
+  height: 62px;
+  width: 62px;
   align-items: center;
   justify-content: center;
   transition: filter 0.3s ease-in;
