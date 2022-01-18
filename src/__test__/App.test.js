@@ -68,6 +68,19 @@ test('Typing numbers work correctly', () => {
   expect(display.textContent).toBe("56");
 });
 
+test('Decimal button works correctly', () => {
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const decimalBtn = getByTestId('.-button');
+  const btnTwo = getByTestId('2-button');
+
+  fireEvent.click(btnTwo);
+  fireEvent.click(decimalBtn);
+  fireEvent.click(btnTwo);
+
+  expect(display.textContent).toBe("2.2");
+});
+
 test('Decimal dot only can be typed once for firstOperand', () => {
   const { getByTestId } = render(<App />);
   const display = getByTestId("display");
@@ -81,7 +94,37 @@ test('Decimal dot only can be typed once for firstOperand', () => {
   expect(display.textContent).toBe("0.2");
 });
 
+test('Only two decimals are allowed for firstOperand', () => {
+  const { getByTestId } = render(<App />);
+  const memoryDisplay = getByTestId("memory-display");
+  const decimalBtn = getByTestId('.-button');
+  const btnTwo = getByTestId('2-button');
 
+  fireEvent.click(btnTwo);
+  fireEvent.click(decimalBtn);
+  fireEvent.click(btnTwo);
+  fireEvent.click(btnTwo);
+  fireEvent.click(btnTwo);
+
+  expect(memoryDisplay.textContent).toBe("2.22");
+});
+
+test('Decimal works correctly secondOperand', () => {
+  const { getByTestId } = render(<App />);
+  const memoryDisplay = getByTestId("memory-display");
+  const decimalBtn = getByTestId('.-button');
+  const btnTwo = getByTestId('2-button');
+  const btnOne = getByTestId('1-button');
+  const plusBtn = getByTestId('+-button');
+
+  fireEvent.click(btnOne);
+  fireEvent.click(plusBtn);
+  fireEvent.click(btnOne);
+  fireEvent.click(decimalBtn);
+  fireEvent.click(btnTwo);
+
+  expect(memoryDisplay.textContent).toBe("1+1.2");
+});
 
 test('Decimal dot only can be typed once for secondOperand', () => {
   const { getByTestId } = render(<App />);
@@ -98,6 +141,24 @@ test('Decimal dot only can be typed once for secondOperand', () => {
   fireEvent.click(btnTwo);
 
   expect(memoryDisplay.textContent).toBe("1+0.2");
+});
+
+test('Only two decimals are allowed for secondOperand', () => {
+  const { getByTestId } = render(<App />);
+  const memoryDisplay = getByTestId("memory-display");
+  const plusBtn = getByTestId('+-button');
+  const decimalBtn = getByTestId('.-button');
+  const btnThree = getByTestId('3-button');
+
+  fireEvent.click(btnThree);
+  fireEvent.click(plusBtn);
+  fireEvent.click(btnThree);
+  fireEvent.click(decimalBtn);
+  fireEvent.click(btnThree);
+  fireEvent.click(btnThree);
+  fireEvent.click(btnThree);
+
+  expect(memoryDisplay.textContent).toBe("3+3.33");
 });
 
 test('Zeroes are not added at front of firstOperand', () => {
@@ -218,4 +279,22 @@ test('Percentage is calculated correctly with secondOperand', () => {
   fireEvent.click(percentageBtn);
 
   expect(display.textContent).toBe("13.5");
+});
+
+test('Commas are added correctly', () => {
+
+  const { getByTestId } = render(<App />);
+  const display = getByTestId("display");
+  const btnOne = getByTestId('1-button');
+  const btnZero = getByTestId('0-button');
+
+  fireEvent.click(btnOne);
+  fireEvent.click(btnZero);
+  fireEvent.click(btnZero);
+  fireEvent.click(btnZero);
+  fireEvent.click(btnZero);
+  fireEvent.click(btnZero);
+  fireEvent.click(btnZero);
+
+  expect(display.textContent).toBe("1,000,000");
 });

@@ -22,8 +22,11 @@ function App() {
         className="display memory" 
         data-testid="memory-display">{state.firstOperand}{state.operation}{state.secondOperand}</div>
       <div 
-        className="display" 
-        data-testid="display">{state.result}</div>
+        className={`display 
+        ${state.result.length > 7 && state.result.length < 11 && "medium"} 
+        ${state.result.length > 10 && state.result.length < 13 && "large"}
+        ${state.result.length > 12 && "x-large"}`} 
+        data-testid="display">{state.result !== "∞" ?parseFloat(state.result).toLocaleString(undefined, {maximumFractionDigits: 2}) : state.result}</div>
       <div className='buttons'>
         {btnContent.map((btn, i) => {
 

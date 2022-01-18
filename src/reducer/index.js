@@ -28,7 +28,18 @@ export default function reducer(state, { type, payload }) {
             ...state,
             secondOperand: payload,
           }
+        } else if (!state.secondOperand.includes(".") && payload === ".") {
+
+          state = {
+            ...state,
+            secondOperand: `${state.secondOperand}${payload}`
+          };
+
         } else if (payload !== "." && state.secondOperand.length < 7) {
+
+          if (state.secondOperand.includes(".") && state.secondOperand.split(".")[1].length === 2) {
+            return state;
+          }
 
           state = {
             ...state,
@@ -63,6 +74,9 @@ export default function reducer(state, { type, payload }) {
         return state;
       }
       if (state.firstOperand.includes('.') && payload === ".") {
+        return state;
+      }
+      if (state.firstOperand.includes('.') && state.firstOperand.split('.')[1].length === 2) {
         return state;
       }
       return {
