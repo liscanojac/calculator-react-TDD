@@ -155,6 +155,11 @@ export default function reducer(state, { type, payload }) {
             ...state,
             operation: "-"
           };
+        } else if (state.operation === "-") {
+          state = {
+            ...state,
+            operation: "+"
+          }
         } else {
           state = {
             ...state,
