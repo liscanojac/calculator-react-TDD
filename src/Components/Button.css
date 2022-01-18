@@ -35,6 +35,6 @@
   filter: brightness(150%);
 }
 
-.equal {
+.button.equal {
   background: crimson;
 }
