@@ -179,7 +179,7 @@ export default function reducer(state, { type, payload }) {
       if (state.secondOperand !== null && state.operation !== null) {
         state = {
           ...state,
-          secondOperand: state.firstOperand * (state.secondOperand / 100)
+          secondOperand: (state.firstOperand * (state.secondOperand / 100)).toFixed(2).toString()
         }
         return {
           ...state,
@@ -189,8 +189,8 @@ export default function reducer(state, { type, payload }) {
       if(state.firstOperand !== null) {
         return {
           ...state,
-          firstOperand: state.firstOperand / 100,
-          result: state.result / 100
+          firstOperand: (state.firstOperand / 100).toString(),
+          result: (state.result / 100).toString()
         }
       }
       return state;
