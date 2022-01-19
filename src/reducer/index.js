@@ -109,7 +109,7 @@ export default function reducer(state, { type, payload }) {
       if (state.result === "0" && state.firstOperand === null) {
         return state;
       }
-      if (state.operation === null) {
+      if (state.secondOperand === null) {
         return {
           ...state,
           operation: payload

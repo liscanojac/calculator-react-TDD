@@ -113,3 +113,18 @@ test('Commas are added correctly', () => {
 
   expect(display.textContent).toBe("1,000,000");
 });
+
+test('Operations are changed correctly', () => {
+
+  const { getByTestId } = render(<App />);
+  const memoryDisplay = getByTestId("memory-display");
+  const btnOne = getByTestId('1-button');
+  const timesBtn = getByTestId('×-button');
+  const plusBtn = getByTestId('+-button');
+
+  fireEvent.click(btnOne);
+  fireEvent.click(timesBtn);
+  fireEvent.click(plusBtn);
+
+  expect(memoryDisplay.textContent).toBe("1+");
+});
