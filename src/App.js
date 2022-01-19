@@ -47,7 +47,7 @@ function App() {
           if (i === btnContent.length - 1) {
             // equal button
             return (
-              <Button dispatch={dispatch} action={ACTIONS.EQUAL} key={i} content={btn} type="function equal" />
+              <Button dispatch={dispatch} action={ACTIONS.EQUAL} key={i} content={btn} type="function" />
             )
           }
 
