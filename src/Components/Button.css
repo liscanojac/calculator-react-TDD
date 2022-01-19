@@ -34,3 +34,6 @@
 .button:hover {
   filter: brightness(150%);
 }
+.button.equal {
+  background: crimson;
+}
